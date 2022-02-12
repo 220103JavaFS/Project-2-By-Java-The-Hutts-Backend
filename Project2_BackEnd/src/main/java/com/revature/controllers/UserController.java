@@ -42,6 +42,7 @@ public class UserController {
             return ResponseEntity.status(400).build();
         }
     }
+
     @PostMapping("/login")
     public ResponseEntity<Users> login(@RequestBody Users user){
         if(userService.findByUsername(user.getUsername())!= null){
