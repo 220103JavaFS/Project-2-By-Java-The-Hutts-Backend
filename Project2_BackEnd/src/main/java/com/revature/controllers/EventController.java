@@ -18,7 +18,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping
+    @PostMapping("/Event")
     public ResponseEntity<Events> addEvent(@RequestBody Events events){
         if(eventService.saveOrUpdateEvent(events)){
             return ResponseEntity.status(201).build();
@@ -26,7 +26,7 @@ public class EventController {
         return ResponseEntity.status(400).build();
     }
 
-    @PutMapping
+    @PutMapping("/Event")
     public ResponseEntity<Events> updateEvent(@RequestBody Events events){
         if(eventService.saveOrUpdateEvent(events)){
             return ResponseEntity.status(202).build();
