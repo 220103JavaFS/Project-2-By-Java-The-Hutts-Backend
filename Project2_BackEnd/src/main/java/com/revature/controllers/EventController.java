@@ -2,7 +2,6 @@ package com.revature.controllers;
 
 import com.revature.models.Events;
 import com.revature.services.EventService;
-import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
