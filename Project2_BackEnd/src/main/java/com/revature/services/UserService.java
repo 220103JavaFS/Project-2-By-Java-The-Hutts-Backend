@@ -12,10 +12,9 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UsersDAO usersDAO, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UsersDAO usersDAO) {
         super();
         this.usersDAO = usersDAO;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     //USER SERVICES

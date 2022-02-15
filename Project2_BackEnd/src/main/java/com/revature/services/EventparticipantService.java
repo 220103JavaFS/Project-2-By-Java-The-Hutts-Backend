@@ -4,9 +4,11 @@ import com.revature.models.Eventparticipants;
 import com.revature.models.Events;
 import com.revature.repo.EventparticipantsDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EventparticipantService {
 
     //EVENTS PARTICIPANTS SERVICE
