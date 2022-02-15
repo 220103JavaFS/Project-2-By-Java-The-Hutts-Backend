@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,7 +30,7 @@ public class Users {
     private String password;
 
     @Enumerated(EnumType.ORDINAL)
-    private ArrayList<UserPreferences> userPreferences;
+    private List<UserPreferences> userPreferences = new ArrayList<>();
 
     public Users() {
     }
@@ -92,11 +93,11 @@ public class Users {
         this.password = password;
     }
 
-    public ArrayList<UserPreferences> getUserPreferences() {
+    public List<UserPreferences> getUserPreferences() {
         return userPreferences;
     }
 
-    public void setUserPreferences(ArrayList<UserPreferences> userPreferences) {
+    public void setUserPreferences(List<UserPreferences> userPreferences) {
         this.userPreferences = userPreferences;
     }
 
