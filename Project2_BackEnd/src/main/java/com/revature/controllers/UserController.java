@@ -51,18 +51,18 @@ public class UserController {
 
 
     @GetMapping("/myevents")
-    public ResponseEntity<Events> getEvents(@RequestBody Users user, HttpSession session){
+    @ResponseBody
+    public ResponseEntity<List<Events>> getEvents(@RequestBody int id, HttpSession session){
         if(session.getAttribute("login").equals(true)) {
-            List<Events> eventList = eventsService.findEventsByCreator(user.getUserId());
+            List<Events> eventList = eventsService.findEventsByCreator(id);
             if (eventList != null) {
-                return ResponseBody;
+                return ResponseEntity.status(200).body(eventList);
             }else{
                 return ResponseEntity.status(400).build();
             }
         }
         return ResponseEntity.status(401).build();
     }
-
 
     @Autowired
     UserController(UserService userService, EventService eventService){

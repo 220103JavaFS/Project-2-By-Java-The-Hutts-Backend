@@ -29,9 +29,9 @@ public class Users {
     private String password;
 
     @ManyToMany(mappedBy = "eventParticipants")
+    @JsonIgnoreProperties("eventParticipants")
     Set<Events> usersEvents;
 
-    //    @JsonIgnoreProperties("eventParticipants")
 
 
     private ArrayList<String> userPreferences;
