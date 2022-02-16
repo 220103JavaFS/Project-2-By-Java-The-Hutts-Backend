@@ -21,13 +21,15 @@ public class Events {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date date;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "event_participants",
             joinColumns = @JoinColumn(name = "eventid"),
             inverseJoinColumns = @JoinColumn(name = "userid"))
-    @JsonIgnoreProperties("userEvents")
     Set<Users> eventParticipants;
+
+    //    @JsonIgnoreProperties("userEvents")
+
 
 
     private String type;

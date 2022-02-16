@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping(value="users")
 @CrossOrigin
 public class UserController {
+
     private UserService userService;
 
     @PostMapping("/registration")
@@ -29,7 +30,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Users> login(@RequestBody Users user, HttpSession session) throws NoSuchAlgorithmException {
         if(userService.loginUser(user)){
-            session.setAttribute("id",user.getUserId());
+            session.setAttribute("login",true);
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(401).build();
@@ -49,4 +50,5 @@ public class UserController {
         super();
         this.userService=userService;
     }
+
 }

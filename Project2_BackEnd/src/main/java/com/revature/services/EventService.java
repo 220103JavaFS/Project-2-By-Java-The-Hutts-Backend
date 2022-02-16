@@ -4,10 +4,12 @@ import com.revature.models.Events;
 import com.revature.repo.EventsDAO;
 import com.revature.repo.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EventService {
 
     private final EventsDAO eventsDAO;
