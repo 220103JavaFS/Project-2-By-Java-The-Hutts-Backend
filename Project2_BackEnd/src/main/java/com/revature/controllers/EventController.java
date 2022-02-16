@@ -5,12 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(value = "users")
 @CrossOrigin
 public class EventController {
 
     EventService eventService;
 
-    @PostMapping("/Event")
+    @PostMapping("/event")
     public ResponseEntity<Events> addEvent(@RequestBody Events events){
         if(eventService.saveOrUpdateEvent(events)){
             return ResponseEntity.status(201).build();
