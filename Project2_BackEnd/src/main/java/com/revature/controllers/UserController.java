@@ -1,6 +1,8 @@
 package com.revature.controllers;
 
+import com.revature.models.Events;
 import com.revature.models.Users;
+import com.revature.services.EventService;
 import com.revature.services.UserService;
 //import com.revature.utils.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="users")
@@ -17,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private EventService eventsService;
 
     @PostMapping("/registration")
     public ResponseEntity<List<Users>> registration(@RequestBody Users user) throws NoSuchAlgorithmException {
@@ -45,10 +49,26 @@ public class UserController {
         return ResponseEntity.status(401).build();
     }
 
+
+    @GetMapping("/myevents")
+    public ResponseEntity<Events> getEvents(@RequestBody Users user, HttpSession session){
+        if(session.getAttribute("login").equals(true)) {
+            List<Events> eventList = eventsService.findEventsByCreator(user.getUserId());
+            if (eventList != null) {
+                return ResponseBody;
+            }else{
+                return ResponseEntity.status(400).build();
+            }
+        }
+        return ResponseEntity.status(401).build();
+    }
+
+
     @Autowired
-    UserController(UserService userService){
+    UserController(UserService userService, EventService eventService){
         super();
-        this.userService=userService;
+        this.userService = userService;
+        this.eventsService = eventService;
     }
 
 }

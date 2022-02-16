@@ -30,7 +30,9 @@ public class EventService {
         return eventsDAO.findAll();
     }
 
-    public boolean saveOrUpdateEvent(Events events){
+    public List<Events> findEventsByCreator(int id){ return eventsDAO.findByCreatedByID(id);}
+
+    public boolean saveEvent(Events events){
         try{
             eventsDAO.save(events);
         }catch(Exception e){
@@ -49,7 +51,5 @@ public class EventService {
         }
         return true;
     }
-
-
 
 }

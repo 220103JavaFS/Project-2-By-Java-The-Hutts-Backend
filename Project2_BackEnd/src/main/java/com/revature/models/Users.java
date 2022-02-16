@@ -94,17 +94,13 @@ public class Users {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) {this.password = password;}
 
     public Set<Events> getUsersEvents() {
         return usersEvents;
     }
 
-    public void setUsersEvents(Set<Events> usersEvents) {
-        this.usersEvents = usersEvents;
-    }
+    public void setUsersEvents(Set<Events> usersEvents) {this.usersEvents = usersEvents;}
 
     public ArrayList<String> getUserPreferences() {
         return userPreferences;
@@ -114,16 +110,4 @@ public class Users {
         this.userPreferences = userPreferences;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Users)) return false;
-        Users users = (Users) o;
-        return getUserId() == users.getUserId() && Objects.equals(getFirstname(), users.getFirstname()) && Objects.equals(getLastname(), users.getLastname()) && Objects.equals(getUsername(), users.getUsername()) && Objects.equals(getEmail(), users.getEmail()) && Objects.equals(getPassword(), users.getPassword()) && Objects.equals(getUsersEvents(), users.getUsersEvents()) && Objects.equals(getUserPreferences(), users.getUserPreferences());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUserId(), getFirstname(), getLastname(), getUsername(), getEmail(), getPassword(), getUsersEvents(), getUserPreferences());
-    }
 }
