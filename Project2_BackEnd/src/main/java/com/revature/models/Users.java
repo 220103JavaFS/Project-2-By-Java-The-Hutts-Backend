@@ -1,16 +1,16 @@
 package com.revature.models;
 
-import com.sun.istack.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userId;
 
     @Column(nullable = false)
@@ -19,28 +19,32 @@ public class Users {
     @Column(nullable = false)
     private String lastname;
 
-    @Column(unique=true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(unique=true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.ORDINAL)
-    private UserPreferences userPreferences;
+    @ManyToMany(mappedBy = "eventParticipants")
+    @JsonIgnoreProperties("eventParticipants")
+    Set<Events> usersEvents;
+
+    private ArrayList<String> userPreferences;
 
     public Users() {
     }
 
-    public Users(int userId, String firstname, String lastname, String username, String email, String password, UserPreferences userPreferences) {
+    public Users(int userId, String firstname, String lastname, String username, String email, String password, Set<Events> usersEvents, ArrayList<String> userPreferences) {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.usersEvents = usersEvents;
         this.userPreferences = userPreferences;
     }
 
@@ -92,37 +96,32 @@ public class Users {
         this.password = password;
     }
 
-    public UserPreferences getUserPreferences() {
+    public Set<Events> getUsersEvents() {
+        return usersEvents;
+    }
+
+    public void setUsersEvents(Set<Events> usersEvents) {
+        this.usersEvents = usersEvents;
+    }
+
+    public ArrayList<String> getUserPreferences() {
         return userPreferences;
     }
 
-    public void setUserPreferences(UserPreferences userPreferences) {
+    public void setUserPreferences(ArrayList<String> userPreferences) {
         this.userPreferences = userPreferences;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Users)) return false;
         Users users = (Users) o;
-        return userId == users.userId && Objects.equals(firstname, users.firstname) && Objects.equals(lastname, users.lastname) && Objects.equals(username, users.username) && Objects.equals(email, users.email) && Objects.equals(password, users.password) && Objects.equals(userPreferences, users.userPreferences);
+        return getUserId() == users.getUserId() && Objects.equals(getFirstname(), users.getFirstname()) && Objects.equals(getLastname(), users.getLastname()) && Objects.equals(getUsername(), users.getUsername()) && Objects.equals(getEmail(), users.getEmail()) && Objects.equals(getPassword(), users.getPassword()) && Objects.equals(getUsersEvents(), users.getUsersEvents()) && Objects.equals(getUserPreferences(), users.getUserPreferences());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstname, lastname, username, email, password, userPreferences);
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "userId=" + userId +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", userPreferences=" + userPreferences +
-                '}';
+        return Objects.hash(getUserId(), getFirstname(), getLastname(), getUsername(), getEmail(), getPassword(), getUsersEvents(), getUserPreferences());
     }
 }

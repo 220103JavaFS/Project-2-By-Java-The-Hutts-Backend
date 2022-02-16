@@ -1,63 +1,81 @@
 package com.revature.models;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Events {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int eventId;
-
-    @Column(nullable = false)
-    private String title;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Column(nullable = false)
     @Value("${aDateStr}")
     private Date date;
 
-    private Timestamp startTime;
+    @ManyToMany
+    @JoinTable(
+            name = "event_participants",
+            joinColumns = @JoinColumn(name = "eventid"),
+            inverseJoinColumns = @JoinColumn(name = "userid"))
+    @JsonIgnoreProperties("userEvents")
+    Set<Users> eventParticipants;
 
-    private Timestamp endTime;
+
+    private String type;
+
+    private float price;
 
     private String notes;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Status status;
+    private boolean status;
+
+    private String activity;
+
+    private Timestamp endTime;
+
+    private Timestamp startTime;
+
+    private float accessibility;
+
+    //number of people attending
+    private Integer participants;
+
+    private Integer createdByID;
 
     public Events() {
     }
 
-    public Events(int eventId, String title, Date date, Timestamp startTime, Timestamp endTime, String notes, Status status) {
-        this.eventId = eventId;
-        this.title = title;
+    public Events(int id, Date date, Set<Users> eventParticipants, String type, float price, String notes, boolean status, String activity,
+                  Timestamp endTime, Timestamp startTime, float accessibility, Integer participants, Integer createdByID) {
+        this.id = id;
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.eventParticipants = eventParticipants;
+        this.type = type;
+        this.price = price;
         this.notes = notes;
         this.status = status;
+        this.activity = activity;
+        this.endTime = endTime;
+        this.startTime = startTime;
+        this.accessibility = accessibility;
+        this.participants = participants;
+        this.createdByID = createdByID;
     }
 
-    public int getEventId() {
-        return eventId;
+    public int getId() {
+        return id;
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDate() {
@@ -68,20 +86,28 @@ public class Events {
         this.date = date;
     }
 
-    public Timestamp getStartTime() {
-        return startTime;
+    public Set<Users> getEventParticipants() {
+        return eventParticipants;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
+    public void setEventParticipants(Set<Users> eventParticipants) {
+        this.eventParticipants = eventParticipants;
     }
 
-    public Timestamp getEndTime() {
-        return endTime;
+    public String getType() {
+        return type;
     }
 
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public String getNotes() {
@@ -92,37 +118,72 @@ public class Events {
         this.notes = notes;
     }
 
-    public Status getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
+    }
+
+    public float getAccessibility() {
+        return accessibility;
+    }
+
+    public void setAccessibility(float accessibility) {
+        this.accessibility = accessibility;
+    }
+
+    public Integer getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Integer participants) {
+        this.participants = participants;
+    }
+
+    public Integer getCreatedByID() {
+        return createdByID;
+    }
+
+    public void setCreatedByID(Integer createdByID) {
+        this.createdByID = createdByID;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Events)) return false;
         Events events = (Events) o;
-        return eventId == events.eventId && Objects.equals(title, events.title) && Objects.equals(date, events.date) && Objects.equals(startTime, events.startTime) && Objects.equals(endTime, events.endTime) && Objects.equals(notes, events.notes) && status == events.status;
+        return getId() == events.getId() && Float.compare(events.getPrice(), getPrice()) == 0 && isStatus() == events.isStatus() && Float.compare(events.getAccessibility(), getAccessibility()) == 0 && Objects.equals(getDate(), events.getDate()) && Objects.equals(getEventParticipants(), events.getEventParticipants()) && Objects.equals(getType(), events.getType()) && Objects.equals(getNotes(), events.getNotes()) && Objects.equals(getActivity(), events.getActivity()) && Objects.equals(getEndTime(), events.getEndTime()) && Objects.equals(getStartTime(), events.getStartTime()) && Objects.equals(getParticipants(), events.getParticipants()) && Objects.equals(getCreatedByID(), events.getCreatedByID());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(eventId, title, date, startTime, endTime, notes, status);
-    }
-
-    @Override
-    public String toString() {
-        return "Events{" +
-                "eventId=" + eventId +
-                ", title='" + title + '\'' +
-                ", date=" + date +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", notes='" + notes + '\'' +
-                ", status=" + status +
-                '}';
+        return Objects.hash(getId(), getDate(), getEventParticipants(), getType(), getPrice(), getNotes(), isStatus(), getActivity(), getEndTime(), getStartTime(), getAccessibility(), getParticipants(), getCreatedByID());
     }
 }
