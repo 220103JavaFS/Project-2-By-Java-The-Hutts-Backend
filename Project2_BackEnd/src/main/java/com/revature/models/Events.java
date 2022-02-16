@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -17,7 +18,7 @@ public class Events {
     private int id;
 
     @Column(nullable = false)
-    @Value("${aDateStr}")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date date;
 
     @ManyToMany
@@ -32,8 +33,6 @@ public class Events {
     private String type;
 
     private float price;
-
-    private String notes;
 
     private boolean status;
 
@@ -60,7 +59,6 @@ public class Events {
         this.eventParticipants = eventParticipants;
         this.type = type;
         this.price = price;
-        this.notes = notes;
         this.status = status;
         this.activity = activity;
         this.endTime = endTime;
@@ -108,14 +106,6 @@ public class Events {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public boolean isStatus() {
@@ -179,11 +169,11 @@ public class Events {
         if (this == o) return true;
         if (!(o instanceof Events)) return false;
         Events events = (Events) o;
-        return getId() == events.getId() && Float.compare(events.getPrice(), getPrice()) == 0 && isStatus() == events.isStatus() && Float.compare(events.getAccessibility(), getAccessibility()) == 0 && Objects.equals(getDate(), events.getDate()) && Objects.equals(getEventParticipants(), events.getEventParticipants()) && Objects.equals(getType(), events.getType()) && Objects.equals(getNotes(), events.getNotes()) && Objects.equals(getActivity(), events.getActivity()) && Objects.equals(getEndTime(), events.getEndTime()) && Objects.equals(getStartTime(), events.getStartTime()) && Objects.equals(getParticipants(), events.getParticipants()) && Objects.equals(getCreatedByID(), events.getCreatedByID());
+        return getId() == events.getId() && Float.compare(events.getPrice(), getPrice()) == 0 && isStatus() == events.isStatus() && Float.compare(events.getAccessibility(), getAccessibility()) == 0 && Objects.equals(getDate(), events.getDate()) && Objects.equals(getEventParticipants(), events.getEventParticipants()) && Objects.equals(getType(), events.getType()) && Objects.equals(getActivity(), events.getActivity()) && Objects.equals(getEndTime(), events.getEndTime()) && Objects.equals(getStartTime(), events.getStartTime()) && Objects.equals(getParticipants(), events.getParticipants()) && Objects.equals(getCreatedByID(), events.getCreatedByID());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getDate(), getEventParticipants(), getType(), getPrice(), getNotes(), isStatus(), getActivity(), getEndTime(), getStartTime(), getAccessibility(), getParticipants(), getCreatedByID());
+        return Objects.hash(getId(), getDate(), getEventParticipants(), getType(), getPrice(), isStatus(), getActivity(), getEndTime(), getStartTime(), getAccessibility(), getParticipants(), getCreatedByID());
     }
 }
