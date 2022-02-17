@@ -25,6 +25,7 @@ public class UserService {
 
     public boolean createUser(Users user) throws NoSuchAlgorithmException {
         user.setPassword(encryptor.encoder(user.getPassword()));
+        System.out.println(user.getUserPreferences());
         try{
             usersDAO.save(user);
         }catch(Exception e){

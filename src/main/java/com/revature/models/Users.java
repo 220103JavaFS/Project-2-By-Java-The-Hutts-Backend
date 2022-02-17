@@ -3,7 +3,7 @@ package com.revature.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,14 +32,16 @@ public class Users {
     @JsonIgnoreProperties("eventParticipants")
     Set<Events> usersEvents;
 
-
-
-    private ArrayList<String> userPreferences;
+    @ElementCollection
+    @CollectionTable(name = "user_preferences",
+    joinColumns = @JoinColumn(name="userId"))
+    @Column(name="userPreferences")
+    private List<String> userPreferences = new ArrayList<String>();
 
     public Users() {
     }
 
-    public Users(int userId, String firstname, String lastname, String username, String email, String password, Set<Events> usersEvents, ArrayList<String> userPreferences) {
+    public Users(int userId, String firstname, String lastname, String username, String email, String password, Set<Events> usersEvents, List<String> userPreferences) {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -102,11 +104,11 @@ public class Users {
 
     public void setUsersEvents(Set<Events> usersEvents) {this.usersEvents = usersEvents;}
 
-    public ArrayList<String> getUserPreferences() {
+    public List<String> getUserPreferences() {
         return userPreferences;
     }
 
-    public void setUserPreferences(ArrayList<String> userPreferences) {
+    public void setUserPreferences(List<String> userPreferences) {
         this.userPreferences = userPreferences;
     }
 

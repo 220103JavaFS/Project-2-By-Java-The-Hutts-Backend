@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value="users")
@@ -25,9 +24,10 @@ public class UserController {
     private EventService eventsService;
 
     @PostMapping("/registration")
-    public ResponseEntity<List<Users>> registration(@RequestBody Users user) throws NoSuchAlgorithmException {
+    public ResponseEntity<Users> registration(@RequestBody Users user) throws NoSuchAlgorithmException {
             if(userService.createUser(user)){
-                return ResponseEntity.status(201).build();
+                System.out.println(user.getUserPreferences());
+                return ResponseEntity.status(201).body(user);
             }
             return ResponseEntity.status(400).build();
         }
@@ -53,9 +53,9 @@ public class UserController {
 
     @GetMapping("/profile")
     @ResponseBody
-    public ResponseEntity<Users> getEvents(@RequestBody String username, HttpSession session){
+    public ResponseEntity<Users> getEvents(@RequestBody loginDTO login, HttpSession session){
         if(session.getAttribute("login").equals(true)) {
-            Users thisuser = userService.findByUsername(username);
+            Users thisuser = userService.findByUsername(login.getUsername());
             if (thisuser != null) {
                 return ResponseEntity.status(200).body(thisuser);
             }else{

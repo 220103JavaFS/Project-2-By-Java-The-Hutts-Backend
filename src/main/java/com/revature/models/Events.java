@@ -29,9 +29,6 @@ public class Events {
     @JsonIgnoreProperties("usersEvents")
     Set<Users> eventParticipants;
 
-
-
-
     private String type;
 
     private float price;
