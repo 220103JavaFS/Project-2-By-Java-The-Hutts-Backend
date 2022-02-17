@@ -4,10 +4,12 @@ import com.revature.models.Events;
 import com.revature.repo.EventsDAO;
 import com.revature.repo.UsersDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class EventService {
 
     private final EventsDAO eventsDAO;
@@ -28,7 +30,9 @@ public class EventService {
         return eventsDAO.findAll();
     }
 
-    public boolean saveOrUpdateEvent(Events events){
+    public List<Events> findEventsByCreator(int id){ return eventsDAO.findByCreatedByID(id);}
+
+    public boolean saveEvent(Events events){
         try{
             eventsDAO.save(events);
         }catch(Exception e){
@@ -47,7 +51,5 @@ public class EventService {
         }
         return true;
     }
-
-
 
 }
