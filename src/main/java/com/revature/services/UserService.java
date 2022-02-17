@@ -1,7 +1,10 @@
 package com.revature.services;
 
 import com.revature.models.Users;
+import com.revature.models.loginDTO;
+
 import com.revature.repo.UsersDAO;
+
 import com.revature.utils.Encryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,19 +34,19 @@ public class UserService {
         return true;
     }
 
-    public Optional<Users> findByUsername(String username) {
+    public Users findByUsername(String username) {
         return usersDAO.findByUsername(username);
     }
 
-    public Optional<Users> findUserByEmail(String email){
+    public Users findUserByEmail(String email){
         return usersDAO.findByEmail(email);
     }
 
-    public boolean loginUser(Users user) throws NoSuchAlgorithmException {
-        Optional<Users> secure = usersDAO.findByUsername(user.getUsername());
-        if (secure.isPresent()){
+    public boolean loginUser(loginDTO user) throws NoSuchAlgorithmException {
+        Users secure = usersDAO.findByUsername(user.getUsername());
+        if (secure != null){
             String passcheck = encryptor.encoder(user.getPassword());
-            String securepass = secure.get().getPassword();
+            String securepass = secure.getPassword();
             return securepass.equals(passcheck);
             }
         return false;

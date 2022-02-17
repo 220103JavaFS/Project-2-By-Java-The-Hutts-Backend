@@ -2,6 +2,8 @@ package com.revature.controllers;
 
 import com.revature.models.Events;
 import com.revature.models.Users;
+import com.revature.models.loginDTO;
+
 import com.revature.services.EventService;
 import com.revature.services.UserService;
 //import com.revature.utils.UserValidator;
@@ -32,8 +34,8 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Users> login(@RequestBody Users user, HttpSession session) throws NoSuchAlgorithmException {
-        if(userService.loginUser(user)){
+    public ResponseEntity<Users> login(@RequestBody loginDTO login, HttpSession session) throws NoSuchAlgorithmException {
+        if(userService.loginUser(login)){
             session.setAttribute("login",true);
             return ResponseEntity.status(200).build();
         }
@@ -45,6 +47,20 @@ public class UserController {
         if(session != null) {
             session.invalidate();
             return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(401).build();
+    }
+
+    @GetMapping("/profile")
+    @ResponseBody
+    public ResponseEntity<Users> getEvents(@RequestBody String username, HttpSession session){
+        if(session.getAttribute("login").equals(true)) {
+            Users thisuser = userService.findByUsername(username);
+            if (thisuser != null) {
+                return ResponseEntity.status(200).body(thisuser);
+            }else{
+                return ResponseEntity.status(400).build();
+            }
         }
         return ResponseEntity.status(401).build();
     }
