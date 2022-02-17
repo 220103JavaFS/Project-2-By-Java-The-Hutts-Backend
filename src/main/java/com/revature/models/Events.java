@@ -21,13 +21,15 @@ public class Events {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date date;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "event_participants",
             joinColumns = @JoinColumn(name = "eventid"),
             inverseJoinColumns = @JoinColumn(name = "userid"))
     @JsonIgnoreProperties("userEvents")
     Set<Users> eventParticipants;
+
+
 
 
     private String type;
@@ -162,18 +164,5 @@ public class Events {
 
     public void setCreatedByID(Integer createdByID) {
         this.createdByID = createdByID;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Events)) return false;
-        Events events = (Events) o;
-        return getId() == events.getId() && Float.compare(events.getPrice(), getPrice()) == 0 && isStatus() == events.isStatus() && Float.compare(events.getAccessibility(), getAccessibility()) == 0 && Objects.equals(getDate(), events.getDate()) && Objects.equals(getEventParticipants(), events.getEventParticipants()) && Objects.equals(getType(), events.getType()) && Objects.equals(getActivity(), events.getActivity()) && Objects.equals(getEndTime(), events.getEndTime()) && Objects.equals(getStartTime(), events.getStartTime()) && Objects.equals(getParticipants(), events.getParticipants()) && Objects.equals(getCreatedByID(), events.getCreatedByID());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getDate(), getEventParticipants(), getType(), getPrice(), isStatus(), getActivity(), getEndTime(), getStartTime(), getAccessibility(), getParticipants(), getCreatedByID());
     }
 }
