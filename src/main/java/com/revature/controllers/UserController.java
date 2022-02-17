@@ -6,10 +6,8 @@ import com.revature.models.loginDTO;
 
 import com.revature.services.EventService;
 import com.revature.services.UserService;
-//import com.revature.utils.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
@@ -37,7 +35,8 @@ public class UserController {
     public ResponseEntity<Users> login(@RequestBody loginDTO login, HttpSession session) throws NoSuchAlgorithmException {
         if(userService.loginUser(login)){
             session.setAttribute("login",true);
-            return ResponseEntity.status(200).build();
+            Users user= userService.findByUsername(login.getUsername());
+            return ResponseEntity.status(200).body(user);
         }
         return ResponseEntity.status(401).build();
     }

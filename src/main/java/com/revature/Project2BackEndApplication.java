@@ -11,7 +11,6 @@ public class Project2BackEndApplication {
 	//Import logger
 	private static final Logger mylog = LoggerFactory.getLogger(Project2BackEndApplication.class);
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(Project2BackEndApplication.class, args);
 	}
