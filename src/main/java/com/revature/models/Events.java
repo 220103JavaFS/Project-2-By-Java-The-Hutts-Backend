@@ -26,7 +26,7 @@ public class Events {
             name = "event_participants",
             joinColumns = @JoinColumn(name = "eventid"),
             inverseJoinColumns = @JoinColumn(name = "userid"))
-    @JsonIgnoreProperties("userEvents")
+    @JsonIgnoreProperties("usersEvents")
     Set<Users> eventParticipants;
 
 
