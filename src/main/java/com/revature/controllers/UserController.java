@@ -34,8 +34,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Users> login(@RequestBody loginDTO login, HttpSession session) throws NoSuchAlgorithmException {
         if(userService.loginUser(login)){
-            session.setAttribute("login",true);
             Users user= userService.findByUsername(login.getUsername());
+            session.setAttribute("login",true);
+            session.setAttribute("userID", user.getUserId());
             return ResponseEntity.status(200).body(user);
         }
         return ResponseEntity.status(401).build();
@@ -53,7 +54,7 @@ public class UserController {
     @GetMapping("/profile")
     @ResponseBody
     public ResponseEntity<Users> getEvents(@RequestBody loginDTO login, HttpSession session){
-        if(session.getAttribute("login").equals(true)) {
+        if(session.getAttribute("login").equals(true)){
             Users thisuser = userService.findByUsername(login.getUsername());
             if (thisuser != null) {
                 return ResponseEntity.status(200).body(thisuser);
@@ -65,19 +66,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/myevents")
-    @ResponseBody
-    public ResponseEntity<List<Events>> getEvents(@RequestBody int id, HttpSession session){
-        if(session.getAttribute("login").equals(true)) {
-            List<Events> eventList = eventsService.findEventsByCreator(id);
-            if (eventList != null) {
-                return ResponseEntity.status(200).body(eventList);
-            }else{
-                return ResponseEntity.status(400).build();
-            }
-        }
-        return ResponseEntity.status(401).build();
-    }
 
     @Autowired
     UserController(UserService userService, EventService eventService){

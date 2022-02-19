@@ -41,7 +41,8 @@ public class Users {
     public Users() {
     }
 
-    public Users(int userId, String firstname, String lastname, String username, String email, String password, Set<Events> usersEvents, List<String> userPreferences) {
+    public Users(int userId, String firstname, String lastname, String username, String email, String password,
+                 Set<Events> usersEvents, List<String> userPreferences) {
         this.userId = userId;
         this.firstname = firstname;
         this.lastname = lastname;

@@ -31,8 +31,6 @@ public class Events {
 
     private String type;
 
-    private float price;
-
     private boolean status;
 
     private String activity;
@@ -41,29 +39,21 @@ public class Events {
 
     private Timestamp startTime;
 
-    private float accessibility;
-
-    //number of people attending
-    private Integer participants;
-
     private Integer createdByID;
 
     public Events() {
     }
 
-    public Events(int id, Date date, Set<Users> eventParticipants, String type, float price, String notes, boolean status, String activity,
-                  Timestamp endTime, Timestamp startTime, float accessibility, Integer participants, Integer createdByID) {
+    public Events(int id, Date date, Set<Users> eventParticipants, String type,  boolean status, String activity,
+                  Timestamp endTime, Timestamp startTime, Integer createdByID) {
         this.id = id;
         this.date = date;
         this.eventParticipants = eventParticipants;
         this.type = type;
-        this.price = price;
         this.status = status;
         this.activity = activity;
         this.endTime = endTime;
         this.startTime = startTime;
-        this.accessibility = accessibility;
-        this.participants = participants;
         this.createdByID = createdByID;
     }
 
@@ -99,14 +89,6 @@ public class Events {
         this.type = type;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -137,22 +119,6 @@ public class Events {
 
     public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
-    }
-
-    public float getAccessibility() {
-        return accessibility;
-    }
-
-    public void setAccessibility(float accessibility) {
-        this.accessibility = accessibility;
-    }
-
-    public Integer getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(Integer participants) {
-        this.participants = participants;
     }
 
     public Integer getCreatedByID() {

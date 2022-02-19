@@ -19,7 +19,6 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.slf4j:slf4j-simple:1.7.32'
 	implementation 'ch.qos.logback:logback-classic:1.2.10'
 }
 

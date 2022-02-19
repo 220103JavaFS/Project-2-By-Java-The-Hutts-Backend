@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     private final UsersDAO usersDAO;
     private static final Encryptor encryptor = new Encryptor();
 
@@ -23,17 +24,7 @@ public class UserService {
         this.usersDAO = usersDAO;
     }
 
-    public boolean createUser(Users user) throws NoSuchAlgorithmException {
-        user.setPassword(encryptor.encoder(user.getPassword()));
-        System.out.println(user.getUserPreferences());
-        try{
-            usersDAO.save(user);
-        }catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+    public Users findById(int id){return usersDAO.findById(id);}
 
     public Users findByUsername(String username) {
         return usersDAO.findByUsername(username);
@@ -53,4 +44,15 @@ public class UserService {
         return false;
     }
 
+    public boolean createUser(Users user) throws NoSuchAlgorithmException {
+        user.setPassword(encryptor.encoder(user.getPassword()));
+        System.out.println(user.getUserPreferences());
+        try{
+            usersDAO.save(user);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
