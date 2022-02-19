@@ -5,7 +5,6 @@ import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -20,9 +19,9 @@ public class EventController {
     @PostMapping("/addevent")
     public ResponseEntity<Events> addEvent(@RequestBody Events events, HttpSession session){
         if(session.getAttribute("login").equals(true)) {
-            events.setCreatedByID((int) session.getAttribute("userID"));
-            userService.findById((int) session.getAttribute("userID"));
-            if (eventService.saveEvent(events)) {
+            int id = (int) session.getAttribute("userID");
+            System.out.println(id + "User id obtained");
+            if (eventService.saveEvent(events, id)) {
                 return ResponseEntity.status(201).build();
             }else{
                 return ResponseEntity.status(400).build();
@@ -34,7 +33,8 @@ public class EventController {
     @PutMapping("/updateevent")
     public ResponseEntity<Events> updateEvent(@RequestBody Events events, HttpSession session){
         if(session.getAttribute("login").equals(true)) {
-            if (eventService.saveEvent(events)) {
+            int id = (int) session.getAttribute("userID");
+            if (eventService.saveEvent(events,id)) {
                 return ResponseEntity.status(201).build();
             }else{
                 return ResponseEntity.status(400).build();

@@ -89,6 +89,7 @@ public class Events {
         this.type = type;
     }
 
+
     public boolean isStatus() {
         return status;
     }
