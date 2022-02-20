@@ -9,13 +9,15 @@ import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping(value="users")
-@CrossOrigin
+@RequestMapping(value = "users")
 public class UserController {
 
     private UserService userService;

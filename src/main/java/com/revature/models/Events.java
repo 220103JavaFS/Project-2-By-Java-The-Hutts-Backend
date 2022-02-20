@@ -35,9 +35,9 @@ public class Events {
 
     private String activity;
 
-    private Timestamp endTime;
+    private String endTime;
 
-    private Timestamp startTime;
+    private String startTime;
 
     private Integer createdByID;
 
@@ -45,7 +45,7 @@ public class Events {
     }
 
     public Events(int id, Date date, Set<Users> eventParticipants, String type,  boolean status, String activity,
-                  Timestamp endTime, Timestamp startTime, Integer createdByID) {
+                  String endTime, String startTime, Integer createdByID) {
         this.id = id;
         this.date = date;
         this.eventParticipants = eventParticipants;
@@ -106,19 +106,19 @@ public class Events {
         this.activity = activity;
     }
 
-    public Timestamp getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    public Timestamp getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
