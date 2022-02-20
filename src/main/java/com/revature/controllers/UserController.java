@@ -7,6 +7,7 @@ import com.revature.models.loginDTO;
 import com.revature.services.EventService;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +66,17 @@ public class UserController {
             }
         }
         return ResponseEntity.status(401).build();
+    }
+
+    @GetMapping("/{username}")
+    @ResponseBody
+    public ResponseEntity<Users> getUser(@PathVariable("username") String username, HttpSession session){
+        Users loggedInUser = userService.findByUsername(username);
+        if (loggedInUser != null) {
+            return ResponseEntity.status(200).body(loggedInUser);
+        } else {
+            return ResponseEntity.status(204).build();
+        }
     }
 
 
