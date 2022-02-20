@@ -7,6 +7,8 @@ EPG will allow users to schedule and generate events according to user preferenc
 Angular - version 12.2. <br>
 Java - version 1.8. <br>
 AWS - relational database system. <br>
+Spring Boot <br>
+Spring JPA <br>
 
 # Stable features:
 Create profile with your own event preferences <br>
