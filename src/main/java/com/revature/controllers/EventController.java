@@ -44,19 +44,16 @@ public class EventController {
     }
 
 
-    @GetMapping("/myevents")
+    @GetMapping("/myevents/{username}")
     @ResponseBody
-    public ResponseEntity<List<Events>> getEvents(HttpSession session){
-        if(session.getAttribute("login").equals(true)) {
-            int id = (int) session.getAttribute("userID");
-            List<Events> eventList = eventService.findEventsByCreator(id);
+    public ResponseEntity<List<Events>> getEvents(@PathVariable String username,HttpSession session){
+        Users unsecure = userService.findByUsername(username);
+            List<Events> eventList = eventService.findEventsByCreator(unsecure.getUserId());
             if (eventList != null) {
                 return ResponseEntity.status(200).body(eventList);
             }else{
                 return ResponseEntity.status(400).build();
             }
-        }
-        return ResponseEntity.status(401).build();
     }
 
     @Autowired
