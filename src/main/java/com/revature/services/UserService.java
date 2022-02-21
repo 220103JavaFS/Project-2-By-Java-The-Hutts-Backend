@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,5 +55,16 @@ public class UserService {
             return false;
         }
         return true;
+    }
+
+    public boolean updateUser(Users user) throws NoSuchAlgorithmException {
+        usersDAO.findByUsername(user.getUsername());
+            try{
+                usersDAO.save(user);
+            }catch(Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
     }
 }
