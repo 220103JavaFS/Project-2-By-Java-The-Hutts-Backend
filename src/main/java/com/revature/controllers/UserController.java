@@ -70,13 +70,21 @@ public class UserController {
 
     @GetMapping("/{username}")
     @ResponseBody
-    public ResponseEntity<Users> getUser(@PathVariable("username") String username, HttpSession session){
+    public ResponseEntity<Users> getUser(@PathVariable("username") String username){
         Users loggedInUser = userService.findByUsername(username);
         if (loggedInUser != null) {
             return ResponseEntity.status(200).body(loggedInUser);
         } else {
             return ResponseEntity.status(204).build();
         }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Users> update(@RequestBody Users user) throws NoSuchAlgorithmException {
+        if(userService.updateUser(user)){
+            return ResponseEntity.status(201).body(user);
+        }
+        return ResponseEntity.status(400).build();
     }
 
 
