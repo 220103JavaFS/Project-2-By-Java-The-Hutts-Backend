@@ -17,9 +17,9 @@ public class Events {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(nullable = false)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-    private Date date;
+//    @Column(nullable = false)
+//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    private String date;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -44,7 +44,7 @@ public class Events {
     public Events() {
     }
 
-    public Events(int id, Date date, Set<Users> eventParticipants, String type,  boolean status, String activity,
+    public Events(int id, String date, Set<Users> eventParticipants, String type,  boolean status, String activity,
                   String endTime, String startTime, Integer createdByID) {
         this.id = id;
         this.date = date;
@@ -65,11 +65,11 @@ public class Events {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
