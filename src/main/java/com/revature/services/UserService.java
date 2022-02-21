@@ -58,7 +58,9 @@ public class UserService {
     }
 
     public boolean updateUser(Users user) throws NoSuchAlgorithmException {
-        usersDAO.findByUsername(user.getUsername());
+        System.out.println(user.getUserId());
+        Users user2 = usersDAO.findByUsername(user.getUsername());
+        user.setUserId(user2.getUserId());
             try{
                 usersDAO.save(user);
             }catch(Exception e) {
